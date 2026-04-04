@@ -9,8 +9,9 @@ void* Request_Handler_Thread(){
 
 }
 
-void*
+//This will be a event-driver (style), pub/sub esque program.
 
+//User subscribes to the topic that is the chatbox, listening to what's incoming from it, when he types a message it is used as a topic to the chatbox
 
 //Since this is only going to be local we will use the localhost ip range 127.0.0.1 - 127.255.255.255
 //This part of the code will be responsible for maintaning the chatrooms and their creation
@@ -39,8 +40,10 @@ int main(int argc, char* argv[]){
         perror("Couldn't bind the socket to it's default parameters");
         exit(0);
     }
+
+    while(1);
     
-    while(1){
-        int NumBytes_Received = recvfrom(ChatMasterSocket,)
-    }
+    /*while(1){
+        int NumBytes_Received = recvfrom(ChatMasterSocket,);
+    }*/
 }
