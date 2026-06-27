@@ -23,38 +23,35 @@ struct board_pos{
 };
 
 //Initial board is drawn with the entire pieces on the correct pos
-void DrawInitialBoardTest(){
+void render_board_test(){
 
-    printf("A -> %d\n", chessBoardxSize);
+    struct board_pos **chess_board = (struct board_pos**)malloc(sizeof(struct board_pos*) * chessBoardySize);
+    for(int i = 0; i < chessBoardySize; i++){
+        chess_board[i] = (struct board_pos*)malloc(sizeof(struct board_pos) * chessBoardxSize);
+    }
 
     const char * const *whitePieces = generateWhitePieces();
     const char * const *blackPieces = generateBlackPieces();
-
-    char **chess_board = (char**)malloc(sizeof(char*) * chessBoardySize);
-    chess_board[8] = '\0';
-    for(int i = 0; i < chessBoardxSize; i++){
-        chess_board[i] = (char*)malloc(sizeof(char) * chessBoardxSize);
-        chess_board[i][8] = '\0';
-    }
 
     //Fill the positions with the pieces
     for(int whitePiecesRows = 0; whitePiecesRows < 2; whitePiecesRows++){
         for(int pieceInBoard = 0; pieceInBoard < chessBoardxSize; pieceInBoard++){
             if(whitePiecesRows == 0){
-
+                chess_board[whiteStartPos][pieceInBoard].y_pos = whiteStartPos;
+                chess_board[whiteStartPos][pieceInBoard].x_pos = pieceInBoard;
                 if(pieceInBoard == 0 || pieceInBoard == 7){
-                    chess_board[whiteStartPos][pieceInBoard] = whitePieces[2][0];
+                    chess_board[whiteStartPos][pieceInBoard].current_piece = whitePieces[2][0];
                 }else if(pieceInBoard == 1 || pieceInBoard == 6){
-                    chess_board[whiteStartPos][pieceInBoard] = whitePieces[4][0];
+                    chess_board[whiteStartPos][pieceInBoard].current_piece = whitePieces[4][0];
                 }else if(pieceInBoard == 2 || pieceInBoard == 5){
-                    chess_board[whiteStartPos][pieceInBoard] = whitePieces[3][0];
+                    chess_board[whiteStartPos][pieceInBoard].current_piece = whitePieces[3][0];
                 }else if(pieceInBoard == 3){
-                    chess_board[whiteStartPos][pieceInBoard] = whitePieces[1][0];
+                    chess_board[whiteStartPos][pieceInBoard].current_piece = whitePieces[1][0];
                 }else if(pieceInBoard == 4){
-                    chess_board[whiteStartPos][pieceInBoard] = whitePieces[0][0];
+                    chess_board[whiteStartPos][pieceInBoard].current_piece = whitePieces[0][0];
                 }
             }else if(whitePiecesRows == 1){
-                chess_board[whiteStartPos+1][pieceInBoard] = whitePieces[5][0];
+                chess_board[whiteStartPos+1][pieceInBoard].current_piece = whitePieces[5][0];
             }
         }
         
@@ -62,34 +59,100 @@ void DrawInitialBoardTest(){
 
     for(int blackPiecesRows = 0; blackPiecesRows < 2; blackPiecesRows++){
         for(int pieceInBoard = 0; pieceInBoard < chessBoardxSize; pieceInBoard++){
+            chess_board[blackPiecesRows][pieceInBoard].y_pos = blackPiecesRows;
+            chess_board[blackPiecesRows][pieceInBoard].x_pos = pieceInBoard;
             if(blackPiecesRows == 0){
                 if(pieceInBoard == 0 || pieceInBoard == 7){
-                    chess_board[blackStartPos][pieceInBoard] = blackPieces[2][0];
+                    chess_board[blackStartPos][pieceInBoard].current_piece = blackPieces[2][0];
                 }else if(pieceInBoard == 1 || pieceInBoard == 6){
-                    chess_board[blackStartPos][pieceInBoard] = blackPieces[4][0];
+                    chess_board[blackStartPos][pieceInBoard].current_piece = blackPieces[4][0];
                 }else if(pieceInBoard == 2 || pieceInBoard == 5){
-                    chess_board[blackStartPos][pieceInBoard] = blackPieces[3][0];
+                    chess_board[blackStartPos][pieceInBoard].current_piece = blackPieces[3][0];
                 }else if(pieceInBoard == 3){
-                    chess_board[blackStartPos][pieceInBoard] = blackPieces[0][0];
+                    chess_board[blackStartPos][pieceInBoard].current_piece = blackPieces[0][0];
                 }else if(pieceInBoard == 4){
-                    chess_board[blackStartPos][pieceInBoard] = blackPieces[1][0];
+                    chess_board[blackStartPos][pieceInBoard].current_piece = blackPieces[1][0];
                 }
             }else if(blackPiecesRows == 1){
-                chess_board[blackStartPos-1][pieceInBoard] = blackPieces[5][0];
+                chess_board[blackStartPos-1][pieceInBoard].current_piece = blackPieces[5][0];
             }
         }
     }
 
-    for(int i = 0; i < chessBoardySize; i++){
-        for(int j = 0; j < chessBoardxSize; j++){
-            printf("%c ", chess_board[i][j]);
+    for(int yPos = 0; yPos < chessBoardySize; yPos++){
+        for(int xPos = 0; xPos < chessBoardxSize; xPos++){
+            printf("%c ", chess_board[yPos][xPos].current_piece);
         }
         printf("\n");
     }
+
+}
+
+struct board_pos ** render_board(){
+
+    struct board_pos **chess_board = (struct board_pos**)malloc(sizeof(struct board_pos*) * chessBoardySize);
+    for(int i = 0; i < chessBoardySize; i++){
+        chess_board[i] = (struct board_pos*)malloc(sizeof(struct board_pos) * chessBoardxSize);
+    }
+
+    const char * const *whitePieces = generateWhitePieces();
+    const char * const *blackPieces = generateBlackPieces();
+
+    //Fill the positions with the pieces
+    for(int whitePiecesRows = 0; whitePiecesRows < 2; whitePiecesRows++){
+        for(int pieceInBoard = 0; pieceInBoard < chessBoardxSize; pieceInBoard++){
+            if(whitePiecesRows == 0){
+                chess_board[whiteStartPos][pieceInBoard].y_pos = whiteStartPos;
+                chess_board[whiteStartPos][pieceInBoard].x_pos = pieceInBoard;
+                if(pieceInBoard == 0 || pieceInBoard == 7){
+                    chess_board[whiteStartPos][pieceInBoard].current_piece = whitePieces[2][0];
+                }else if(pieceInBoard == 1 || pieceInBoard == 6){
+                    chess_board[whiteStartPos][pieceInBoard].current_piece = whitePieces[4][0];
+                }else if(pieceInBoard == 2 || pieceInBoard == 5){
+                    chess_board[whiteStartPos][pieceInBoard].current_piece = whitePieces[3][0];
+                }else if(pieceInBoard == 3){
+                    chess_board[whiteStartPos][pieceInBoard].current_piece = whitePieces[1][0];
+                }else if(pieceInBoard == 4){
+                    chess_board[whiteStartPos][pieceInBoard].current_piece = whitePieces[0][0];
+                }
+            }else if(whitePiecesRows == 1){
+                chess_board[whiteStartPos+1][pieceInBoard].current_piece = whitePieces[5][0];
+            }
+        }
+        
+    }
+
+    for(int blackPiecesRows = 0; blackPiecesRows < 2; blackPiecesRows++){
+        for(int pieceInBoard = 0; pieceInBoard < chessBoardxSize; pieceInBoard++){
+            chess_board[blackPiecesRows][pieceInBoard].y_pos = blackPiecesRows;
+            chess_board[blackPiecesRows][pieceInBoard].x_pos = pieceInBoard;
+            if(blackPiecesRows == 0){
+                if(pieceInBoard == 0 || pieceInBoard == 7){
+                    chess_board[blackStartPos][pieceInBoard].current_piece = blackPieces[2][0];
+                }else if(pieceInBoard == 1 || pieceInBoard == 6){
+                    chess_board[blackStartPos][pieceInBoard].current_piece = blackPieces[4][0];
+                }else if(pieceInBoard == 2 || pieceInBoard == 5){
+                    chess_board[blackStartPos][pieceInBoard].current_piece = blackPieces[3][0];
+                }else if(pieceInBoard == 3){
+                    chess_board[blackStartPos][pieceInBoard].current_piece = blackPieces[0][0];
+                }else if(pieceInBoard == 4){
+                    chess_board[blackStartPos][pieceInBoard].current_piece = blackPieces[1][0];
+                }
+            }else if(blackPiecesRows == 1){
+                chess_board[blackStartPos-1][pieceInBoard].current_piece = blackPieces[5][0];
+            }
+        }
+    }
+
+    return chess_board;
+}
+
+void move_piece(){
+    
 }
 
 //When a piece is moved the entire board isn't re-rendered, only the pos is redone
-char re_render_board){
+char re_render_board(){
     return 66;
 }
 
@@ -100,8 +163,13 @@ void move_piece(){
 int main(int argc, char* argv[]){
 
     char userChoice = loadmenu();
+    struct board_pos **chess_board = render_board();
+
     printf("%c\n", userChoice);
-    //SimpleKeyPairPrintTest();
-    DrawInitialBoardTest();
+    
+    if(userChoice == '3'){
+        SimpleKeyPairPrintTest();
+        render_board_test();
+    }
     return 0;
 }
