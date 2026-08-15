@@ -13,19 +13,6 @@
 #define BlackChessNumber 16
 #define WhiteChessNumber 16
 
-struct chess_piece{ 
-    char Type; // K, Q, R, B, N, P for white pieces and k, q, r, b, n, p for black pieces
-    int y_pos; //0-7
-    int x_pos; //a-g is 0-7
-};
-
-struct board_pos{
-    char current_piece;
-    int y_pos;
-    int x_pos;
-};
-
-
 //Initial board is drawn with the entire pieces on the correct pos
 void render_board_test(){
 

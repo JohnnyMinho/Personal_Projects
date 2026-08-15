@@ -11,19 +11,6 @@
 #define BlackChessNumber 16
 #define WhiteChessNumber 16
 
-struct chess_piece{ 
-    char Type; // K, Q, R, B, N, P for white pieces and k, q, r, b, n, p for black pieces
-    int y_pos; //0-7
-    int x_pos; //a-g is 0-7
-};
-
-struct board_pos{
-    char current_piece;
-    int y_pos;
-    int x_pos;
-};
-
-
 struct board_pos ** render_board(){
 
     struct board_pos **chess_board = (struct board_pos**)malloc(sizeof(struct board_pos*) * chessBoardySize);
@@ -99,5 +86,6 @@ int main(){
     printf("Chess Game\n");
 
     struct board_pos **chess_board = render_board();
+    
     return 1;
 }
