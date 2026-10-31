@@ -104,11 +104,11 @@ int main(int argc, char* argv[]){
         int x = 4;
         int y = 4;
         char testpiece = 'b';
-        char movement[2] = {"A3"};
+        char movement[2] = {"A6"};
         isValidMovement(&x,&y,movement,testpiece,0);
         pthread_t child;
         pthread_create(&child, NULL, Runit, NULL);
-        //sleep(10);
+        sleep(10);
     }
     return 0;
 }

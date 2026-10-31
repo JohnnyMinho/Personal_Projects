@@ -17,9 +17,10 @@ int isValidMovement(int *xPos, int *yPos, char *movement ,char pieceType,int isP
         printf("Your movement is invalid [bad input] \n");
         return 0;
     }
-    int currentXPOS = *xPos;
-    int currentYPOS = *yPos;
+    int currentXPOS = *(xPos);
     printf("Hello\n");
+    int currentYPOS = *(yPos);
+    
     int convertedXMovement = convertedMovement[0];
     int convertedYMovement = convertedMovement[1];
     
@@ -86,7 +87,7 @@ int isValidMovement(int *xPos, int *yPos, char *movement ,char pieceType,int isP
     }
     //Bishop
     if(pieceType == 'B' || pieceType == 'b'){
-        if(convertedXMovement != convertedYMovement || (convertedXMovement == currentXPOS || convertedYMovement == currentYPOS)){
+        if((convertedXMovement-currentXPOS != convertedYMovement-currentYPOS)){
             printf("Invalid Bishop movement\n");
             return 0;
         }
@@ -98,8 +99,8 @@ int isValidMovement(int *xPos, int *yPos, char *movement ,char pieceType,int isP
             //One of the rare cases where doing this is actually easier
         }else{
             //Diagonal movement
-            if(convertedXMovement != convertedYMovement || (convertedXMovement == currentXPOS || convertedYMovement == currentYPOS)){
-                printf("Invalid Queen movement\n");
+            if((convertedXMovement-currentXPOS != convertedYMovement-currentYPOS)){
+                printf("Invalid Bishop movement\n");
                 return 0;
             }
         }
@@ -157,6 +158,10 @@ int * convertMovementToPos(char *charToInt){
         return convertedMovement;
     }
     return convertedMovement;
+}
+
+int isValidPosition(char *chosenPosition){
+
 }
 
 //Aux function implementation

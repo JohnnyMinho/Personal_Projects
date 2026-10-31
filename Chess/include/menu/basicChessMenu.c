@@ -5,14 +5,6 @@
 
 //Aux functins
 
-void clear_console(){
-    #ifdef _WIN32
-        clrscr();
-    #else
-        system("clear");
-    #endif
-}
-
 int validate_user_input(char input){
     int asciiValue = (int)input;
     if(asciiValue >= 49 && asciiValue <= 52){

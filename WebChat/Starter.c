@@ -3,6 +3,6 @@
 int main(){
 
     printf("Starting ChatServer ♔\n");
-
+    
     return 0;
 }

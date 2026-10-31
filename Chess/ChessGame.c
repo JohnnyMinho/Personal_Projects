@@ -3,6 +3,7 @@
 #include <pthread.h>
 #include "Chess_Pieces.h"
 #include "gamelogic.h"
+#include "basicInputReader.h"
 
 #define chessBoardxSize 8
 #define chessBoardySize 8 // 8 + 1 for array sizes since we need to terminate it
@@ -11,7 +12,7 @@
 #define BlackChessNumber 16
 #define WhiteChessNumber 16
 
-struct board_pos ** render_board(){
+struct board_pos ** generate_board(){
 
     struct board_pos **chess_board = (struct board_pos**)malloc(sizeof(struct board_pos*) * chessBoardySize);
     for(int i = 0; i < chessBoardySize; i++){
@@ -70,6 +71,19 @@ struct board_pos ** render_board(){
     return chess_board;
 }
 
+void render_board(struct board_pos **current_board){
+    for(int i = 0; i < chessBoardxSize; i++){
+        for(int j = 0; j < chessBoardySize; j++){
+            if(current_board[i][j].current_piece == NULL){
+                printf("| |");
+            }else{
+                printf("|%c|",current_board[i][j].current_piece);
+            }
+        }
+        printf("\n");
+    }
+}
+
 void move_piece(){
     
 }
@@ -81,11 +95,40 @@ char re_render_board(){
 
 
 //This is gonna be the chess game program itself
+//If any of the user input presents an error we will goto the beginning of the cycle.
 int main(){
 
     printf("Chess Game\n");
-
-    struct board_pos **chess_board = render_board();
+    int game_ended = 0;
+    int player_turn = 0; // 0 -> whites, 1 -> black
     
+
+    struct board_pos **chess_board = generate_board();
+    render_board(chess_board);
+    
+    while(game_ended == 0){
+        char *player_input = (char *)malloc(sizeof(char)*2);
+        int validGameInput = 0;
+        switch (player_turn){
+            case 1:
+                printf("White side turn\n");
+                printf("Choose which piece to move:");
+                while(quickReadGameInput(2, player_input) == 0){
+                    clear_console();
+                    printf("")
+                }
+                break;
+            case 0:
+                printf("Black side turn\n");
+                printf("Choose which piece to move:");
+                if(quickReadGameInput(2, player_input) == 1){
+
+                }
+                
+                break;
+        }
+        free(player_input);
+    }
+
     return 1;
 }

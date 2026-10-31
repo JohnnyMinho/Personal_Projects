@@ -4,6 +4,14 @@
 
 size_t size_read(char* readBuffer);
 
+void clear_console(){
+    #ifdef _WIN32
+        clrscr();
+    #else
+        system("clear");
+    #endif
+}
+
 //This function uses fgets and just quickly trims the newline character since the size we will always return is small
 void quickReadInputStdin(size_t maxSizeForReturn, char* originalBuffer) {
     char readingBuffer[257];
@@ -19,6 +27,17 @@ void quickReadInputStdin(size_t maxSizeForReturn, char* originalBuffer) {
         //We know that the last character is a newline so the actual size we want is bufferSize - 1;
         break;
     }
+}
+
+//If the player input is less than 2 we consider it as invalid. This is done outside of the game logic to not send anything there
+int quickReadGameInput(char* playerInputBuffer){
+    quickReadInputStdin(2,playerInputBuffer);
+    for(int i=0;i<2;i++){
+        if(playerInputBuffer[i] == '\0'){
+            return 0; //The movement ended before having 2 elements we send a bad movement value
+        }
+    }
+    return 1;
 }
 
 size_t size_read(char* readBuffer){

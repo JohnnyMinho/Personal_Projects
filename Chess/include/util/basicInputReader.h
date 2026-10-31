@@ -4,5 +4,6 @@
 char* readSizedInputStdin(size_t);
 char* readInputStdin();
 char* quickReadInputStdin(size_t , char* );
+void clear_console();
 
 #endif
